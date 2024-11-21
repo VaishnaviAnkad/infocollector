@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register - Admin & User</title>
+  <style>
+    /* Reset default margin and padding for all elements */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #003366; /* Navy Blue */
+    }
+
+    .textbox {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .textbox input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .textbox input:focus {
+      outline: none;
+      border-color: #003366;
+    }
+
+    .btn {
+      background-color: #003366; /* Navy Blue */
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background-color: #002244; /* Darker Navy Blue */
+    }
+
+    .forgot-password {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .forgot-password a {
+      text-decoration: none;
+      color: #003366;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    /* Dashboard */
+    .dashboard-container {
+      display: none; /* Initially hidden */
+      text-align: center;
+    }
+
+    .dashboard-container h2 {
+      margin-bottom: 20px;
+    }
+
+    .dashboard-container p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .register-link {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      text-decoration: none;
+      color: #003366;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Login Page -->
+<div class="form-container" id="login-container">
+  <h2>Login</h2>
+  <form id="login-form">
+    <div class="textbox">
+      <input type="text" id="login-username" placeholder="Username" required>
+    </div>
+    <div class="textbox">
+      <input type="password" id="login-password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn">Login</button>
+  </form>
+  <p class="register-link">
+    Don't have an account? <a href="#" onclick="toggleForm('register')">Register</a>
+  </p>
+</div>
+
+<!-- Register Page -->
+<div class="form-container" id="register-container" style="display: none;">
+  <h2>Register</h2>
+  <form id="register-form">
+    <div class="textbox">
+      <input type="text" id="register-username" placeholder="Username" required>
+    </div>
+    <div class="textbox">
+      <input type="password" id="register-password" placeholder="Password" required>
+    </div>
+    <div class="textbox">
+      <select id="register-role" required>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <button type="submit" class="btn">Register</button>
+  </form>
+  <p class="register-link">
+    Already have an account? <a href="#" onclick="toggleForm('login')">Login</a>
+  </p>
+</div>
+
+<!-- Admin Dashboard Page -->
+<div class="dashboard-container" id="admin-dashboard">
+  <h2>Welcome to the Admin Dashboard</h2>
+  <p>You have logged in as Admin.</p>
+  <button class="btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- User Dashboard Page -->
+<div class="dashboard-container" id="user-dashboard">
+  <h2>Welcome to the User Dashboard</h2>
+  <p>You have logged in as User.</p>
+  <button class="btn" onclick="logout()">Logout</button>
+</div>
+
+<script>
+  // Toggle between login and register forms
+  function toggleForm(form) {
+    if (form === 'register') {
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('register-container').style.display = 'block';
+    } else {
+      document.getElementById('login-container').style.display = 'block';
+      document.getElementById('register-container').style.display = 'none';
+    }
+  }
+
+  // Registration logic
+  document.getElementById('register-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('register-username').value;
+    const password = document.getElementById('register-password').value;
+    const role = document.getElementById('register-role').value;
+
+    // Save user information to localStorage (simulating a database)
+    localStorage.setItem(username, JSON.stringify({ username, password, role }));
+
+    alert("Registration successful! You can now login.");
+    toggleForm('login');
+  });
+
+  // Login logic
+  document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    // Get stored user information from localStorage
+    const storedUser = JSON.parse(localStorage.getItem(username));
+
+    if (storedUser && storedUser.password === password) {
+      // Login successful, show the dashboard based on role
+      document.getElementById('login-container').style.display = 'none';
+      if (storedUser.role === 'admin') {
+        document.getElementById('admin-dashboard').style.display = 'block';
+      } else {
+        document.getElementById('user-dashboard').style.display = 'block';
+      }
+    } else {
+      alert("Invalid username or password.");
+    }
+  });
+
+  // Logout function
+  function logout() {
+    // Hide both dashboards and show login form
+    document.getElementById('admin-dashboard').style.display = 'none';
+    document.getElementById('user-dashboard').style.display = 'none';
+    document.getElementById('login-container').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>

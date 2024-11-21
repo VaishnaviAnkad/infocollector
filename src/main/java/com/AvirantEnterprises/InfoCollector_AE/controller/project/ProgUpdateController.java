@@ -1,0 +1,17 @@
+package com.AvirantEnterprises.InfoCollector_AE.controller.project;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class ProgUpdateController {
+
+    @GetMapping("/ProgressUpdateForm.html")
+    public String showDashboard(Model model) {
+        model.addAttribute("ProjectName", "Dashboard - Avirant Enterprises");
+        model.addAttribute("ProgressUpdate", "Dashboard - Avirant Enterprises");
+        model.addAttribute("UpdateProgressReport", "Dashboard - Avirant Enterprises");
+        return "ProgressUpdateForm"; // Name of the HTML file
+    }
+}

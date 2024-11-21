@@ -1,0 +1,19 @@
+<web-app >
+<servlet>
+<servlet-name>TaskServlet</servlet-name>
+<servlet-class>TaskServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>TaskServlet</servlet-name>
+<url-pattern>/submitTask</url-pattern>
+</servlet-mapping>
+
+<servlet>
+<servlet-name>AdminPanelServlet</servlet-name>
+<servlet-class>AdminPanelServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>AdminPanelServlet</servlet-name>
+<url-pattern>/adminPanel</url-pattern>
+</servlet-mapping>
+        </web-app>

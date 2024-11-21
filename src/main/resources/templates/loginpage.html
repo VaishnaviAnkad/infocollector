@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration Page</title>
+    <style>
+        /* Reset default margin and padding for all elements */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Main container */
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        /* Title styles */
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #003366; /* Navy Blue */
+        }
+
+        /* Textbox input fields */
+        .textbox {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .textbox input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .textbox input:focus {
+            outline: none;
+            border-color: #003366;
+        }
+
+        /* Button styles */
+        .btn {
+            background-color: #003366; /* Navy Blue */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #002244; /* Darker Navy Blue */
+        }
+
+        /* Forgot password link styles */
+        .forgot-password {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .forgot-password a {
+            text-decoration: none;
+            color: #003366;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Register/Toggle link styles */
+        .toggle-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .toggle-link a {
+            text-decoration: none;
+            color: #003366;
+        }
+
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hide the registration form initially */
+        #register-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main container for login and registration -->
+<div class="form-container">
+    <!-- Login Form -->
+    <div id="login-form">
+        <h2>Login</h2>
+        <form action="#" method="POST">
+            <div class="textbox">
+                <input type="text" placeholder="Username" name="username" required>
+            </div>
+            <div class="textbox">
+                <input type="password" placeholder="Password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <p class="forgot-password">
+            <a href="#">Forgot Password?</a>
+        </p>
+        <p class="toggle-link">
+            Don't have an account? <a href="#" onclick="toggleForm()">Register here</a>
+        </p>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="register-form">
+        <h2>Register</h2>
+        <form action="#" method="POST">
+            <div class="textbox">
+                <input type="text" placeholder="Username" name="username" required>
+            </div>
+            <div class="textbox">
+                <input type="email" placeholder="Email" name="email" required>
+            </div>
+            <div class="textbox">
+                <input type="password" placeholder="Password" name="password" required>
+            </div>
+            <div class="textbox">
+                <input type="password" placeholder="Confirm Password" name="confirm-password" required>
+            </div>
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p class="toggle-link">
+            Already have an account? <a href="#" onclick="toggleForm()">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    // Toggle between login and registration forms
+    function toggleForm() {
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("register-form");
+        if (loginForm.style.display === "none") {
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+        } else {
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+        }
+    }
+
+    // Initially show the login form and hide the registration form
+    document.getElementById("login-form").style.display = "block";
+    document.getElementById("register-form").style.display = "none";
+</script>
+
+</body>
+</html>

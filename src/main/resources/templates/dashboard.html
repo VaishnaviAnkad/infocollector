@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avirant Enterprises Dashboard</title>
+
+    <!-- Bootstrap CDN for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS for blue and white color scheme -->
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light blue background */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        h1, h2 {
+
+            color: #007bff;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100vh;
+            background-color: #007bff;
+            padding-top: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            font-size: 18px;
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #0056b3;
+            border-radius: 5px;
+        }
+
+        /* Content styles */
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        /* Styling for the forms in small squares */
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #007bff;
+            height: 250px; /* Fixed height for uniformity */
+        }
+
+        /* Hover effects for the form cards */
+        .form-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 8px 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        hr {
+            border-top: 1px solid #007bff;
+        }
+
+        /* Header styles */
+        .navbar {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .navbar img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* Adjust grid layout for 3x3 forms */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .form-col {
+            flex: 1 0 30%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        /* Ensure 3x3 grid layout */
+        @media (max-width: 768px) {
+            .form-col {
+                flex: 1 0 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Sidebar Section -->
+<div class="sidebar">
+    <ul class="nav flex-column">
+        <!-- Personal Information Collection -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showCategoryForms('personalInfo')">Personal Information Collection</a>
+
+        </li>
+
+        <!-- Business and Financial Data Collection -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showCategoryForms('businessData')">Business and Financial Data Collection</a>
+        </li>
+
+        <!-- Project and Task Management -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showCategoryForms('projectTaskManagement')">Project and Task Management</a>
+        </li>
+
+        <!-- Education and Training Data Collection -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showCategoryForms('educationTraining')">Education and Training Data Collection</a>
+        </li>
+    </ul>
+</div>
+
+
+<!-- Main Content Section -->
+<div class="main-content">
+    <!-- Header Section -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <img src="logo.png" alt="Company Logo">
+            <a class="navbar-brand" href="#">Avirant Enterprises</a>
+        </div>
+    </nav>
+
+    <!-- Dynamic Content Area -->
+    <div class="container">
+        <h1>Welcome to the Dashboard</h1>
+        <div id="message" class="message"></div>
+
+        <!-- Forms Section -->
+        <div id="form-container" class="form-row">
+            <!-- Forms will be dynamically loaded here in a 3x3 grid layout -->
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<div class="footer text-center">
+    <p>&copy; 2024 Avirant Enterprises. All rights reserved.</p>
+    <p>Contact: info@avirant.com</p>
+</div>
+
+<!-- Bootstrap JS for interactions like collapse -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript to dynamically load the forms for each category -->
+<script>
+    const formsData = {
+        personalInfo: [
+            { name: 'Registration Form', id: 'registrationForm', link: '/RegistrationForm.html' },
+            { name: 'Profile Update Form', id: 'profileUpdateForm', link: '/ProfileUpdateForm.html' },
+            { name: 'Security Form', id: 'securityForm', link: '/SecurityForm.html' },
+            { name: 'Contact Information Form', id: 'contactInfoForm', link: '/ContactInformationForm.html' },
+            { name: 'Subscription Form', id: 'subscriptionForm', link: '/SubscriptionForm.html' },
+        ],
+        businessData: [
+            { name: 'Expense Report Form', id: 'expenseReportForm', link: '/ExpenseReportForm.html' },
+            { name: 'Invoice Submission Form', id: 'invoiceSubmissionForm', link: '/InvoiceSubmissionForm.html' },
+            { name: 'Tax Form', id: 'taxForm', link: '/TaxForm.html' },
+            { name: 'Employee Performance Form', id: 'employeePerformanceForm', link: '/EmployeePerformanceForm.html' },
+            { name: 'Asset Registration Form', id: 'assetRegistrationForm', link: '/AssetRegistrationForm.html' },
+        ],
+        projectTaskManagement: [
+            { name: 'Task Assignment Form', id: 'taskAssignmentForm', link: '/TaskAssignment.html' },
+            { name: 'Project Proposal Form', id: 'projectProposalForm', link: '/projectpraposal.html' },
+            { name: 'Feedback & Issue Tracking Form', id: 'feedbackIssueTrackingForm', link: '/FeedbackandIssueTrackingForm.html' },
+            { name: 'Resource Allocation Form', id: 'resourceAllocationForm', link: '/ResourceAllocationForm.html' },
+            { name: 'Progress Update Form', id: 'progressUpdateForm', link: '/ProgressUpdateForm.html' },
+        ],
+        educationTraining: [
+            { name: 'Course Enrollment Form', id: 'courseEnrollmentForm', link: '/CourseEnrollmentForm.html' },
+            { name: 'Assignment Submission Form', id: 'assignmentSubmissionForm', link: '/AssignmentSubmissionForm.html' },
+            { name: 'Training Feedback Form', id: 'trainingFeedbackForm', link: '/TrainingFeedbackForm.html' },
+            { name: 'Event Registration Form', id: 'eventRegistrationForm', link: '/EventRegistrationForm.html' },
+            { name: 'Certification Upload Form', id: 'certificationUploadForm', link: '/CertificationUploadForm.html' },
+        ]
+    };
+
+
+    // Function to display forms based on category
+    function showCategoryForms(category) {
+        const formsContainer = document.getElementById('form-container');
+        formsContainer.innerHTML = ''; // Clear previous content
+
+        const forms = formsData[category];
+        let row = document.createElement('div');
+        row.classList.add('form-row'); // Start a new row for the 3x3 grid layout
+
+        forms.forEach((form, index) => {
+            const col = document.createElement('div');
+            col.classList.add('form-col');
+
+            const formContainer = document.createElement('div');
+            formContainer.classList.add('form-container');
+            formContainer.innerHTML = `
+            <h4>${form.name}</h4>
+            <button class="btn btn-primary" onclick="openForm('${form.link || '#'}')">View Form</button>
+        `;
+
+            col.appendChild(formContainer);
+            row.appendChild(col);
+
+            // If we have 3 columns, reset for the next row
+            if ((index + 1) % 3 === 0) {
+                formsContainer.appendChild(row);
+                row = document.createElement('div');
+                row.classList.add('form-row');
+            }
+        });
+
+        // Append any remaining forms in the last row
+        if (forms.length % 3 !== 0) {
+            formsContainer.appendChild(row);
+        }
+    }
+
+    // Function to open the form's link
+    function openForm(link) {
+        if (link === '#') {
+            alert('Form is not available yet!');
+        } else {
+            window.location.href = link;
+        }
+    }
+
+    // Default to load the first category forms
+    showCategoryForms('personalInfo');
+
+</script>
+
+</body>
+</html>

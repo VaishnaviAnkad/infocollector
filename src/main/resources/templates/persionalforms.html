@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .sidebar {
+            width: 20%;
+            float: left;
+            height: 100vh;
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            margin-left: 20%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card {
+            display: inline-block;
+            width: 30%;
+            margin: 1%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #fff;
+        }
+        .card button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .card button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h3>Avirant Enterprises</h3>
+    <a href="#">Personal Information Collection</a>
+    <a href="#">Business and Financial Data Collection</a>
+    <a href="#">Project and Task Management</a>
+    <a href="#">Education and Training Data Collection</a>
+</div>
+<div class="content">
+    <h1>Welcome to the Dashboard</h1>
+    <div class="card">
+        <h3>Task Assignment Form</h3>
+        <button onclick="location.href='taskAssignment.html'">View Form</button>
+    </div>
+    <div class="card">
+        <h3>Project Proposal Form</h3>
+        <button onclick="location.href='projectProposal.html'">View Form</button>
+    </div>
+    <div class="card">
+        <h3>Feedback & Issue Tracking Form</h3>
+        <button onclick="location.href='feedbackForm.html'">View Form</button>
+    </div>
+    <form action="submitTask" method="POST" enctype="multipart/form-data">
+        <!-- Form fields remain the same -->
+        <button type="submit" class="btn">Submit Task</button>
+    </form>
+
+</div>
+</body>
+</html>

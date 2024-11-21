@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Assignment Form</title>
+
+  <!-- Bootstrap CDN for Styling -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jsPDF Library for PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Custom CSS for Styling -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin-top: 50px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid #007bff;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .form-control, .form-select {
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .file-input-container {
+      border: 2px dashed #007bff;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .file-input-container input[type="file"] {
+      display: none;
+    }
+
+    .file-input-container label {
+      cursor: pointer;
+      font-size: 16px;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .file-input-container .file-info {
+      margin-top: 10px;
+      color: #333;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        margin-top: 30px;
+        padding: 0 15px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .btn-primary {
+        width: 100%;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Task Assignment Form</h1>
+  <div class="form-container">
+
+    <form id="taskAssignmentForm" method="post" enctype="multipart/form-data">
+      <!-- Task Details Section -->
+      <div class="form-group">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" class="form-control" placeholder="Enter Task Name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="taskDescription">Task Description:</label>
+        <textarea id="taskDescription" name="taskDescription" class="form-control" placeholder="Enter Task Description" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="taskDeadline">Task Deadline:</label>
+        <input type="date" id="taskDeadline" name="taskDeadline" class="form-control" required>
+      </div>
+
+      <!-- Assignee Information Section -->
+      <div class="form-group">
+        <label for="assigneeName">Assignee Name:</label>
+        <input type="text" id="assigneeName" name="assigneeName" class="form-control" placeholder="Enter Assignee Name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="assigneeEmail">Assignee Email:</label>
+        <input type="email" id="assigneeEmail" name="assigneeEmail" class="form-control" placeholder="Enter Assignee Email" required>
+      </div>
+
+      <!-- File Upload Section -->
+      <div class="form-group file-input-container">
+        <label for="fileUpload">Attach File (PDF/Image):</label>
+        <input type="file" id="fileUpload" name="fileUpload" class="form-control" accept="application/pdf,image/*" onchange="showFileInfo()">
+        <div class="file-info" id="fileInfo"></div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Task</button>
+      </div>
+    </form>
+
+    <!-- Download Link (hidden initially) -->
+    <div id="downloadLinkContainer" style="display:none; text-align:center;">
+      <a href="#" id="downloadLink" class="btn btn-success">Download Submitted Task as PDF</a>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Function to display the uploaded file information
+  function showFileInfo() {
+    const fileInput = document.getElementById('fileUpload');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
+    fileInfo.textContent = fileName ? `Selected file: ${fileName}` : 'No file selected.';
+  }
+
+  // Function to generate and download PDF after successful submission
+  function generatePDF(formData) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add task information to PDF
+    doc.text(`Task Name: ${formData.taskName}`, 10, 10);
+    doc.text(`Task Description: ${formData.taskDescription}`, 10, 20);
+    doc.text(`Task Deadline: ${formData.taskDeadline}`, 10, 30);
+    doc.text(`Assignee Name: ${formData.assigneeName}`, 10, 40);
+    doc.text(`Assignee Email: ${formData.assigneeEmail}`, 10, 50);
+    doc.text(`Attached File: ${formData.fileName}`, 10, 60);
+
+    // Save the PDF
+    const pdfData = doc.output('blob');
+    const downloadLink = document.getElementById('downloadLink');
+    downloadLink.href = URL.createObjectURL(pdfData);
+    document.getElementById('downloadLinkContainer').style.display = 'block';
+  }
+
+  // Form submission handler
+  document.getElementById('taskAssignmentForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get form data
+    const formData = {
+      taskName: document.getElementById('taskName').value,
+      taskDescription: document.getElementById('taskDescription').value,
+      taskDeadline: document.getElementById('taskDeadline').value,
+      assigneeName: document.getElementById('assigneeName').value,
+      assigneeEmail: document.getElementById('assigneeEmail').value,
+      fileName: document.getElementById('fileUpload').files[0] ? document.getElementById('fileUpload').files[0].name : 'None'
+    };
+
+    // Generate the PDF
+    generatePDF(formData);
+  });
+</script>
+
+</body>
+</html>
